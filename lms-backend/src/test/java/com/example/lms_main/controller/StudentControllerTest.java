@@ -1,60 +1,47 @@
 package com.example.lms_main.controller;
 
-import com.example.lms_main.entity.Course;
-import com.example.lms_main.service.CourseService;
+import com.example.lms_main.entity.Assignment;
+import com.example.lms_main.entity.Student;
 import com.example.lms_main.service.StudentService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.http.ResponseEntity;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class StudentControllerTest {
 
-    private StudentController studentController;
-    private CourseService courseService;
+    private MockMvc mockMvc;
+
+    @Mock
     private StudentService studentService;
 
-    @BeforeEach
-    void setUp() {
-        courseService = mock(CourseService.class);
-        studentService = mock(StudentService.class);
-        studentController = new StudentController(studentService, courseService);
+    @InjectMocks
+    private StudentController studentController;
+
+    StudentControllerTest() {
+        MockitoAnnotations.openMocks(this);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(studentController).build();
     }
 
     @Test
-    void testGetAllCourses() {
-        Course course1 = new Course();
-        course1.setId(1L);
-        course1.setName("Course 1");
+    void testGetStudentAssignments() throws Exception {
+        List<Assignment> assignments = new ArrayList<>(); 
+        assignments.add(new Assignment("Math Assignment", new Student()));
 
-        Course course2 = new Course();
-        course2.setId(2L);
-        course2.setName("Course 2");
+        when(studentService.getAllAssignmentsByStudents(new Student())).thenReturn(assignments);
 
-        when(courseService.getAllCourses()).thenReturn(Arrays.asList(course1, course2));
-
-        List<Course> courses = studentController.getAllCourses();
-        assertEquals(2, courses.size());
-        assertEquals("Course 1", courses.get(0).getName());
-        assertEquals("Course 2", courses.get(1).getName());
-    }
-
-    @Test
-    void testGetCourseById() {
-        Course course = new Course();
-        course.setId(1L);
-        course.setName("Course 1");
-
-        when(courseService.getCourseById(1L)).thenReturn(java.util.Optional.of(course));
-
-        ResponseEntity<Course> response = studentController.getCourseById(1L);
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("Course 1", response.getBody().getName());
+        mockMvc.perform(get("/api/student/assignments")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }

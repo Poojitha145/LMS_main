@@ -18,8 +18,8 @@ import lombok.Setter;
 @Table(name="course_table")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Course {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

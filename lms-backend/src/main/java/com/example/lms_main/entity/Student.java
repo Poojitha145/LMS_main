@@ -1,27 +1,30 @@
 package com.example.lms_main.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "student_table")
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
-@ToString
-
-public class Student{
-     @Id
-     @GeneratedValue(strategy=GenerationType.AUTO)
-     @Column(name = "sid",length = 40)
-     private int sid;
-
+@Setter
+public class Student {
     @Id
-    @Column(name = "username")
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "sid")
+    private int sid;
+
+    @Column(name = "username", unique = true)
     private String username;
 
-    @Column(name = "password")
     private String password;
 }

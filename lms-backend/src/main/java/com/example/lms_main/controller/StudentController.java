@@ -16,8 +16,6 @@ import com.example.lms_main.service.StudentService;
 
 import lombok.RequiredArgsConstructor;
 
-
-
 @RestController
 @RequestMapping("/students")
 @CrossOrigin
@@ -28,8 +26,7 @@ public class StudentController {
     private StudentService studentService;
 
     @Autowired
-    private  CourseService courseService;
-
+    private CourseService courseService;
 
     @GetMapping("/courses")
     public List<Course> getAllCourses() {
@@ -42,5 +39,4 @@ public class StudentController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
 }

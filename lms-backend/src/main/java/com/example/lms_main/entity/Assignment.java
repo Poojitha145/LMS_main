@@ -16,9 +16,8 @@ import lombok.Setter;
 @Table(name="assignment_table")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-
+@AllArgsConstructor
 public class Assignment {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -26,7 +25,7 @@ public class Assignment {
 
     private String title;
     private String description;
-    private char grade;
+    private String grade;  // Changed to String for flexibility
 
     @ManyToOne
     @JoinColumn(name = "course_id")
@@ -35,61 +34,4 @@ public class Assignment {
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    // public Date getDueDate() {
-    //     return dueDate;
-    // }
-
-    // public void setDueDAte(Date dueDAte) {
-    //     this.dueDate = dueDAte;
-    // }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public char getGrade() {
-        return grade;
-    }
-
-    public void setGrade(char grade) {
-        this.grade = grade;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
 }

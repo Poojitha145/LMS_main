@@ -1,67 +1,97 @@
+// LoginControllerTest.java
+
 package com.example.lms_main.controller;
 
-import com.example.lms_main.dto.LoginRequest;
 import com.example.lms_main.entity.RegisteredUser;
+import com.example.lms_main.entity.Teacher;
 import com.example.lms_main.service.StudentService;
 import com.example.lms_main.service.TeacherService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.Mockito;
-import org.springframework.http.ResponseEntity;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import java.util.Optional; // Ensure this import is added
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class LoginControllerTest {
 
-    private LoginController loginController;
+    private MockMvc mockMvc;
+
+    @Mock
     private StudentService studentService;
+
+    @Mock
     private TeacherService teacherService;
+
+    @InjectMocks
+    private LoginController loginController;
 
     @BeforeEach
     void setUp() {
-        studentService = mock(StudentService.class);
-        teacherService = mock(TeacherService.class);
-        loginController = new LoginController(teacherService, studentService);
+        MockitoAnnotations.openMocks(this);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(loginController).build();
     }
 
     @Test
-    void testLoginSuccessStudent() {
-        LoginRequest loginRequest = new LoginRequest("student", "password");
-        RegisteredUser user = new RegisteredUser();
-        user.setRole("STUDENT");
+    void testStudentLoginSuccess() throws Exception {
+        RegisteredUser registeredUser = new RegisteredUser(1L, "studentUser", "password123", "STUDENT");
 
-        when(studentService.login(loginRequest.getUsername(), loginRequest.getPassword())).thenReturn(user);
+        // Simulate a successful login
+        when(studentService.login("studentUser", "password123"))
+                .thenReturn(registeredUser);
 
-        ResponseEntity<String> response = loginController.login(loginRequest);
-        assertEquals("Student login successful", response.getBody());
-        assertEquals(200, response.getStatusCodeValue());
+        mockMvc.perform(post("/api/login/student")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"studentUser\", \"password\":\"password123\"}"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    void testLoginSuccessTeacher() {
-        LoginRequest loginRequest = new LoginRequest("teacher", "password");
-        RegisteredUser user = new RegisteredUser();
-        user.setRole("TEACHER");
+    void testTeacherLoginSuccess() throws Exception {
+        Teacher teacher = new Teacher(); // Assuming Teacher class is properly defined
+        teacher.setId(2L); // Ensure this method exists in Teacher class
+        teacher.setUsername("teacherUser");
+        teacher.setPassword("password123");
 
-        when(studentService.login(loginRequest.getUsername(), loginRequest.getPassword())).thenReturn(user);
+        // Simulate a successful login with an Optional<Teacher>
+        when(teacherService.login("teacherUser", "password123"))
+                .thenReturn(Optional.of(teacher));
 
-        ResponseEntity<String> response = loginController.login(loginRequest);
-        assertEquals("Teacher login successful", response.getBody());
-        assertEquals(200, response.getStatusCodeValue());
+        mockMvc.perform(post("/api/login/teacher")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"teacherUser\", \"password\":\"password123\"}"))
+                .andExpect(status().isOk());
     }
 
     @Test
-    void testLoginFailure() {
-        LoginRequest loginRequest = new LoginRequest("invalidUser", "invalidPassword");
-        RegisteredUser user = new RegisteredUser();
-        user.setRole("INVALID");
+    void testStudentLoginFailure() throws Exception {
+        // Simulate a failed login for the student
+        when(studentService.login("unknownUser", "wrongPassword"))
+                .thenReturn(null); // StudentService login method returns null for failure
 
-        when(studentService.login(loginRequest.getUsername(), loginRequest.getPassword())).thenReturn(user);
+        mockMvc.perform(post("/api/login/student")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"unknownUser\", \"password\":\"wrongPassword\"}"))
+                .andExpect(status().isUnauthorized());
+    }
 
-        ResponseEntity<String> response = loginController.login(loginRequest);
-        assertEquals("Invalid credentials for user", response.getBody());
-        assertEquals(401, response.getStatusCodeValue());
+    @Test
+    void testTeacherLoginFailure() throws Exception {
+        // Simulate a failed login with an empty Optional for the teacher
+        when(teacherService.login("unknownTeacher", "wrongPassword"))
+                .thenReturn(Optional.empty());
+
+        mockMvc.perform(post("/api/login/teacher")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"unknownTeacher\", \"password\":\"wrongPassword\"}"))
+                .andExpect(status().isUnauthorized());
     }
 }

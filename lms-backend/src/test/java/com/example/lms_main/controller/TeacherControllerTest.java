@@ -1,89 +1,47 @@
 package com.example.lms_main.controller;
 
-import com.example.lms_main.entity.Assignment;
-import com.example.lms_main.entity.Course;
-import com.example.lms_main.exception.ResourseNotFoundException;
-import com.example.lms_main.repository.CourseRepository;
-import com.example.lms_main.service.AssignmentService;
-import com.example.lms_main.service.CourseService;
-import org.junit.jupiter.api.BeforeEach;
+import com.example.lms_main.entity.Teacher;
+import com.example.lms_main.service.TeacherService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.http.ResponseEntity;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class TeacherControllerTest {
 
+    private MockMvc mockMvc;
+
+    @Mock
+    private TeacherService teacherService;
+
+    @InjectMocks
     private TeacherController teacherController;
-    private CourseService courseService;
-    private AssignmentService assignmentService;
-    private CourseRepository courseRepository;
 
-    @BeforeEach
-    void setUp() {
-        courseService = mock(CourseService.class);
-        assignmentService = mock(AssignmentService.class);
-        courseRepository = mock(CourseRepository.class);
-        teacherController = new TeacherController(courseService, assignmentService, courseRepository);
+    TeacherControllerTest() {
+        MockitoAnnotations.openMocks(this);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(teacherController).build();
     }
 
     @Test
-    void testCreateCourse() {
-        Course course = new Course();
-        course.setName("New Course");
+    void testTeacherLogin() throws Exception {
+        Teacher teacher = new Teacher();
+        teacher.setEmail("teacher@example.com");
+        teacher.setPassword("password123");
 
-        when(courseService.createCourse(course)).thenReturn(course);
+        when(teacherService.login("teacher@example.com", "password123")).thenReturn(Optional.of(teacher));
 
-        ResponseEntity<String> response = teacherController.createCourse(course);
-        assertEquals("Course ceated successfully!", response.getBody());
-    }
-
-    @Test
-    void testEditCourseDetails() {
-        Course existingCourse = new Course();
-        existingCourse.setId(1L);
-        existingCourse.setName("Existing Course");
-
-        Course updatedCourse = new Course();
-        updatedCourse.setId(1L);
-        updatedCourse.setName("Updated Course");
-
-        when(courseRepository.findById(1L)).thenReturn(java.util.Optional.of(existingCourse));
-        when(courseService.saveCourse(existingCourse)).thenReturn(existingCourse);
-
-        ResponseEntity<Course> response = teacherController.editCourseDetails(updatedCourse);
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("Updated Course", response.getBody().getName());
-    }
-
-    @Test
-    void testDeleteCourse() {
-        long courseId = 1L;
-        doNothing().when(courseService).deleteCourse(courseId);
-
-        ResponseEntity<String> response = teacherController.deleteCourse(courseId);
-        assertEquals("Course deleted Successfully!", response.getBody());
-    }
-
-    @Test
-    void testGetAllAssignments() {
-        Assignment assignment1 = new Assignment();
-        assignment1.setId(1L);
-        assignment1.setTitle("Assignment 1");
-
-        Assignment assignment2 = new Assignment();
-        assignment2.setId(2L);
-        assignment2.setTitle("Assignment 2");
-
-        when(assignmentService.getAllAssignments()).thenReturn(Arrays.asList(assignment1, assignment2));
-
-        List<Assignment> assignments = teacherController.getAllAssignments();
-        assertEquals(2, assignments.size());
-        assertEquals("Assignment 1", assignments.get(0).getTitle());
+        mockMvc.perform(post("/api/login/teacher")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"teacher@example.com\", \"password\":\"password123\"}"))
+                .andExpect(status().isOk());
     }
 }

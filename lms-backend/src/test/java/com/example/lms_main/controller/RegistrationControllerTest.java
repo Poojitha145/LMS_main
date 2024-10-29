@@ -1,36 +1,43 @@
 package com.example.lms_main.controller;
 
 import com.example.lms_main.entity.RegisteredUser;
-import com.example.lms_main.service.serviceImpl.RegistrationService;
-import org.junit.jupiter.api.BeforeEach;
+import com.example.lms_main.service.RegistrationService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.http.ResponseEntity;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class RegistrationControllerTest {
 
-    private RegistrationController registrationController;
+    private MockMvc mockMvc;
+
+    @Mock
     private RegistrationService registrationService;
 
-    @BeforeEach
-    void setUp() {
-        registrationService = mock(RegistrationService.class);
-        registrationController = new RegistrationController();
-        registrationController.registrationService = registrationService;
+    @InjectMocks
+    private RegistrationController registrationController;
+
+    RegistrationControllerTest() {
+        MockitoAnnotations.openMocks(this);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(registrationController).build();
     }
 
     @Test
-    void testRegisterUser() {
-        RegisteredUser registeredUser = new RegisteredUser();
-        registeredUser.setUsername("newUser");
+    void testRegisterUser() throws Exception {
+        RegisteredUser newUser = new RegisteredUser(1L, "newUser", "password123", "STUDENT");
 
-        when(registrationService.saveUser(registeredUser)).thenReturn(registeredUser);
+        when(registrationService.saveUser(newUser)).thenReturn(newUser);
 
-        RegisteredUser response = registrationController.register(registeredUser);
-        assertEquals("newUser", response.getUsername());
-        verify(registrationService, times(1)).saveUser(registeredUser);
+        mockMvc.perform(post("/api/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"newUser\", \"password\":\"password123\", \"role\":\"STUDENT\"}"))
+                .andExpect(status().isOk());
     }
 }

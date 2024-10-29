@@ -1,28 +1,22 @@
 package com.example.lms_main.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import lombok.*;
-
-@NoArgsConstructor
-@Setter
 @Getter
-@ToString
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudentDto {
-    // public StudentDto(int sid, String name, String address, String tel, String nic) {
-    //     this.sid = sid;
-    //     this.name = name;
-    //     this.address = address;
-    //     this.tel = tel;
-    //     this.nic = nic;
-    // }
+    private int sid;         
+    private String username; 
+    private String password; 
 
-    // private int sid;
-    // private String name;
-    // private String address;
-    // private String tel;
-    // private String nic;
 
-    public StudentDto(String username, String password) {
-
+    public StudentDto(int sid, String username) {
+        this.sid = sid;
+        this.username = username;
     }
 }

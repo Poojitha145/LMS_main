@@ -34,54 +34,53 @@ public class TeacherController {
     private AssignmentService assignmentService;
     @Autowired
     private CourseRepository courseRepository;
-    
+
     @PostMapping("/course")
     public ResponseEntity<String> createCourse(@RequestBody Course course) {
         courseService.createCourse(course);
-        return new ResponseEntity<>("Course ceated successfully!", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Course created successfully!");
     }
 
     @PutMapping("/editcourse")
-    public ResponseEntity<Course> editCourseDetails(Course course){
-        Course course1 = courseRepository.findById(course.getId())
-                .orElseThrow(() -> new ResourseNotFoundException("Employee not exist with id: " + course.getId()));
-        course1.setId(course.getId());
-        course1.setName(course.getName());
-        course1.setAssignments(course.getAssignments());
-        course1.setDescription(course.getDescription());
+    public ResponseEntity<Course> editCourseDetails(@RequestBody Course course) {
+        Course existingCourse = courseRepository.findById(course.getId())
+                .orElseThrow(() -> new ResourseNotFoundException("Course not exist with id: " + course.getId()));
+        
+        existingCourse.setName(course.getName());
+        existingCourse.setAssignments(course.getAssignments());
+        existingCourse.setDescription(course.getDescription());
 
-        courseService.saveCourse(course1);
-        return ResponseEntity.ok(course1);
+        courseService.saveCourse(existingCourse);
+        return ResponseEntity.ok(existingCourse);
     }
 
     @DeleteMapping("/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
-        return new ResponseEntity<>("Course deleted Successfully!", HttpStatus.OK);
+        return ResponseEntity.ok("Course deleted successfully!");
     }
-
-
 
     @PostMapping("/assignment")
     public ResponseEntity<String> createAssignment(@RequestBody Assignment assignment) {
         assignmentService.createAssignment(assignment);
-        return new ResponseEntity<>("Assignment ceated successfully!", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Assignment created successfully!");
     }
     
     @DeleteMapping("/assignments/{id}")
     public ResponseEntity<String> deleteAssignment(@PathVariable Long id) {
         assignmentService.deleteAssignment(id);
-        return new ResponseEntity<>("Assignment deleted Successfully!", HttpStatus.OK);
+        return ResponseEntity.ok("Assignment deleted successfully!");
     }
 
     @GetMapping("/getallassignments")
-    public List<Assignment> getAllAssignments(){
-        return assignmentService.getAllAssignments();
+    public ResponseEntity<List<Assignment>> getAllAssignments() {
+        List<Assignment> assignments = assignmentService.getAllAssignments();
+        return ResponseEntity.ok(assignments);
     }
 
-
     @GetMapping("/getallcourses")
-    public List<Course> getAllCourses(){
-        return courseService.getAllCourses();
+    public ResponseEntity<List<Course>> getAllCourses() {
+        List<Course> courses = courseService.getAllCourses();
+        return ResponseEntity.ok(courses);
     }
 }
