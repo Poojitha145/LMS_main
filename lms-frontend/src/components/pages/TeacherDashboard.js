@@ -1,11 +1,10 @@
-// TeacherDashboard.js
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Menu } from 'antd';
 import { Link, Route, Routes } from 'react-router-dom';
 import ManageCourses from './ManageCourses'; // Ensure this component is created
 import ManageAssignments from './ManageAssignments'; // Ensure this component is created
 import ManageGrades from './ManageGrades'; // Ensure this component is created
+import { fetchCourses, fetchAssignments } from '../services/apiService'; // Import your API functions
 import './TeacherDashboard.css';
 
 const { Header, Content } = Layout;
@@ -44,48 +43,68 @@ const TeacherDashboard = () => {
 };
 
 const DashboardContent = () => {
-  // Hardcoded courses for the teacher
-  const courses = [
-    { id: 1, title: 'Introduction to Programming', description: 'Basic programming concepts' },
-    { id: 2, title: 'Data Structures and Algorithms', description: 'Core data structures' },
-    { id: 3, title: 'Web Development Basics', description: 'Intro to HTML, CSS, and JS' },
-    { id: 4, title: 'Database Management Systems', description: 'Designing and managing databases' },
-  ];
+  const [courses, setCourses] = useState([]);
+  const [assignments, setAssignments] = useState([]);
+  const [loadingCourses, setLoadingCourses] = useState(true);
+  const [loadingAssignments, setLoadingAssignments] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Hardcoded assignments for the teacher
-  const assignments = [
-    { id: 1, title: 'Programming Fundamentals', dueDate: 'Oct 30, 2024', description: 'Exercises 1-10' },
-    { id: 2, title: 'Algorithm Analysis', dueDate: 'Nov 5, 2024', description: 'Analyze algorithms' },
-    { id: 3, title: 'HTML & CSS Basics', dueDate: 'Nov 12, 2024', description: 'Create webpage layout' },
-    { id: 4, title: 'Database Project', dueDate: 'Nov 20, 2024', description: 'Design database schema' },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const coursesResponse = await fetchCourses(); // Fetch courses from the API
+        setCourses(coursesResponse.data); // Adjust based on your API response
+        const assignmentsResponse = await fetchAssignments(); // Fetch assignments from the API
+        setAssignments(assignmentsResponse.data); // Adjust based on your API response
+      } catch (err) {
+        setError('Failed to fetch data. Please try again later.');
+      } finally {
+        setLoadingCourses(false);
+        setLoadingAssignments(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div>
       <h1>Welcome to Teacher Dashboard</h1>
-      
+
       <h2>Your Courses</h2>
-      <div className="course-cards">
-        {courses.map(course => (
-          <div className="card" key={course.id}>
-            <div className="card-title">{course.title}</div>
-            <p><strong>Description:</strong> {course.description}</p>
-          </div>
-        ))}
-        <Link to="/manage-courses" className="view-all-link">Manage All Courses</Link>
-      </div>
+      {loadingCourses ? (
+        <p>Loading courses...</p>
+      ) : error ? (
+        <p className="error-message">{error}</p>
+      ) : (
+        <div className="course-cards">
+          {courses.map(course => (
+            <div className="card" key={course.id}>
+              <div className="card-title">{course.title}</div>
+              <p><strong>Description:</strong> {course.description}</p>
+            </div>
+          ))}
+          <Link to="/manage-courses" className="view-all-link">Manage All Courses</Link>
+        </div>
+      )}
 
       <h2>Your Assignments</h2>
-      <div className="assignment-cards">
-        {assignments.map(assignment => (
-          <div className="card" key={assignment.id}>
-            <div className="card-title">{assignment.title}</div>
-            <p><strong>Due Date:</strong> {assignment.dueDate}</p>
-            <p><strong>Description:</strong> {assignment.description}</p>
-          </div>
-        ))}
-        <Link to="/manage-assignments" className="view-all-link">Manage All Assignments</Link>
-      </div>
+      {loadingAssignments ? (
+        <p>Loading assignments...</p>
+      ) : error ? (
+        <p className="error-message">{error}</p>
+      ) : (
+        <div className="assignment-cards">
+          {assignments.map(assignment => (
+            <div className="card" key={assignment.id}>
+              <div className="card-title">{assignment.title}</div>
+              <p><strong>Due Date:</strong> {assignment.dueDate}</p>
+              <p><strong>Description:</strong> {assignment.description}</p>
+            </div>
+          ))}
+          <Link to="/manage-assignments" className="view-all-link">Manage All Assignments</Link>
+        </div>
+      )}
     </div>
   );
 };

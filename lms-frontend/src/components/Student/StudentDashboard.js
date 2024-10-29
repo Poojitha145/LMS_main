@@ -1,15 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Menu } from 'antd';
 import { Link, Route, Routes } from 'react-router-dom';
 import CoursesPage from './CoursesPage';
 import AssignmentsPage from './AssignmentsPage';
 import GradesPage from './GradesPage';
+import { fetchCourses, fetchAssignments } from '../services/apiService'; // Import the API functions
 import './StudentDashboard.css';
 import { RightOutlined } from '@ant-design/icons';
 
 const { Header, Content } = Layout;
 
 const StudentDashboard = () => {
+  const [courses, setCourses] = useState([]);
+  const [assignments, setAssignments] = useState([]);
+  const [loadingCourses, setLoadingCourses] = useState(true);
+  const [loadingAssignments, setLoadingAssignments] = useState(true);
+
+  // Fetch courses and assignments
+  useEffect(() => {
+    const getCourses = async () => {
+      try {
+        const response = await fetchCourses();
+        setCourses(response.data); // Adjust based on your API response
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      } finally {
+        setLoadingCourses(false);
+      }
+    };
+
+    const getAssignments = async () => {
+      try {
+        const response = await fetchAssignments();
+        setAssignments(response.data); // Adjust based on your API response
+      } catch (error) {
+        console.error('Error fetching assignments:', error);
+      } finally {
+        setLoadingAssignments(false);
+      }
+    };
+
+    getCourses();
+    getAssignments();
+  }, []);
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Header className="header">
@@ -32,7 +66,7 @@ const StudentDashboard = () => {
 
       <Content className="content">
         <Routes>
-          <Route path="/" element={<DashboardContent />} />
+          <Route path="/" element={<DashboardContent courses={courses} assignments={assignments} loadingCourses={loadingCourses} loadingAssignments={loadingAssignments} />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/assignments" element={<AssignmentsPage />} />
           <Route path="/grades" element={<GradesPage />} />
@@ -42,65 +76,42 @@ const StudentDashboard = () => {
   );
 };
 
-const DashboardContent = () => (
+const DashboardContent = ({ courses, assignments, loadingCourses, loadingAssignments }) => (
   <div>
     <h1>Welcome to Student Dashboard</h1>
 
     <section className="section">
       <h2>Courses</h2>
-      <div className="course-cards">
-        <div className="card">
-          <div className="card-title">Course 1</div>
-          <p>Introduction to Programming</p>
-          <p><strong>Description:</strong> Basic introduction to Programming</p>
+      {loadingCourses ? (
+        <p>Loading courses...</p>
+      ) : (
+        <div className="course-cards">
+          {courses.map((course, index) => (
+            <div key={index} className="card">
+              <div className="card-title">{course.title}</div>
+              <p>{course.description}</p>
+            </div>
+          ))}
         </div>
-        <div className="card">
-          <div className="card-title">Course 2</div>
-          <p>Data Structures and Algorithms</p>
-          <p><strong>Description:</strong> Introduction to Data Structures and Algorithms</p>
-        </div>
-        <div className="card">
-          <div className="card-title">Course 3</div>
-          <p>Web Development Basics</p>
-          <p><strong>Description:</strong> Introduction to Web Development</p>
-        </div>
-        <div className="card">
-          <div className="card-title">Course 4</div>
-          <p>Database Management Systems</p>
-          <p><strong>Description:</strong> Introduction to DBMS</p>
-        </div>
-      </div>
+      )}
       <Link to="/courses" className="view-all-link">View All <RightOutlined /></Link>
     </section>
 
     <section className="section">
       <h2>Assignments</h2>
-      <div className="assignment-cards">
-        <div className="card">
-          <div className="card-title">Assignment 1</div>
-          <p>Programming Fundamentals</p>
-          <p><strong>Due Date:</strong> Oct 30, 2024</p>
-          <p>Complete exercises 1-10 from the textbook</p>
+      {loadingAssignments ? (
+        <p>Loading assignments...</p>
+      ) : (
+        <div className="assignment-cards">
+          {assignments.map((assignment, index) => (
+            <div key={index} className="card">
+              <div className="card-title">{assignment.title}</div>
+              <p><strong>Due Date:</strong> {assignment.dueDate}</p>
+              <p>{assignment.description}</p>
+            </div>
+          ))}
         </div>
-        <div className="card">
-          <div className="card-title">Assignment 2</div>
-          <p>Algorithm Analysis</p>
-          <p><strong>Due Date:</strong> Nov 5, 2024</p>
-          <p>Analyze and optimize the given algorithm samples</p>
-        </div>
-        <div className="card">
-          <div className="card-title">Assignment 3</div>
-          <p>HTML & CSS Basics</p>
-          <p><strong>Due Date:</strong> Nov 12, 2024</p>
-          <p>Create a basic webpage layout using HTML & CSS</p>
-        </div>
-        <div className="card">
-          <div className="card-title">Assignment 4</div>
-          <p>Database Project</p>
-          <p><strong>Due Date:</strong> Nov 20, 2024</p>
-          <p>Design a simple database schema for a library system</p>
-        </div>
-      </div>
+      )}
       <Link to="/assignments" className="view-all-link">View All <RightOutlined /></Link>
     </section>
   </div>

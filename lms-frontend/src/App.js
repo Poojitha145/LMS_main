@@ -13,31 +13,40 @@ import CoursesPage from './components/Student/CoursesPage';
 import AssignmentsPage from './components/Student/AssignmentsPage';
 import GradesPage from './components/Student/GradesPage';
 
+// Private Route Component
+const PrivateRoute = ({ element, allowedRoles }) => {
+  const user = JSON.parse(localStorage.getItem(localStorage.getItem('loggedInUser')));
+  
+  return allowedRoles.includes(user?.role) ? element : <Navigate to="/auth" />;
+};
+
 const App = () => {
-  const getUserData = () => {
-    const username = localStorage.getItem('loggedInUser');
-    return username ? JSON.parse(localStorage.getItem(username)) : null;
-  };
-
-  const user = getUserData();
-
   return (
     <Routes>
-      <Route path="/" element={<Navigate to={user ? (user.role === 'teacher' ? "/teacher-dashboard" : "/student-dashboard") : "/auth"} />} />
-
+      <Route 
+        path="/" 
+        element={
+          <Navigate to={localStorage.getItem('loggedInUser') 
+            ? (JSON.parse(localStorage.getItem(localStorage.getItem('loggedInUser'))).role === 'teacher' 
+              ? "/teacher-dashboard" 
+              : "/student-dashboard") 
+            : "/auth"} 
+          />
+        } 
+      />
       <Route path="/auth" element={<Auth />} />
-      
-      <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
-      <Route path="/manage-courses" element={<ManageCourses />} />
-      <Route path="/manage-assignments" element={<ManageAssignments />} />
-      <Route path="/manage-grades" element={<ManageGrades />} />
-      <Route path="/add-grade" element={<AddGrade />} />
-      <Route path="/add-course" element={<AddCourse />} />
-      <Route path="/add-assignment" element={<AddAssignment />} />
-      <Route path="/student-dashboard" element={<StudentDashboard />} />
-      <Route path="/courses" element={<CoursesPage />} />
-      <Route path="/assignments" element={<AssignmentsPage />} />
-      <Route path="/grades" element={<GradesPage />} />
+
+      <Route path="/teacher-dashboard" element={<PrivateRoute element={<TeacherDashboard />} allowedRoles={['teacher']} />} />
+      <Route path="/manage-courses" element={<PrivateRoute element={<ManageCourses />} allowedRoles={['teacher']} />} />
+      <Route path="/manage-assignments" element={<PrivateRoute element={<ManageAssignments />} allowedRoles={['teacher']} />} />
+      <Route path="/manage-grades" element={<PrivateRoute element={<ManageGrades />} allowedRoles={['teacher']} />} />
+      <Route path="/add-grade" element={<PrivateRoute element={<AddGrade />} allowedRoles={['teacher']} />} />
+      <Route path="/add-course" element={<PrivateRoute element={<AddCourse />} allowedRoles={['teacher']} />} />
+      <Route path="/add-assignment" element={<PrivateRoute element={<AddAssignment />} allowedRoles={['teacher']} />} />
+      <Route path="/student-dashboard" element={<PrivateRoute element={<StudentDashboard />} allowedRoles={['student']} />} />
+      <Route path="/courses" element={<PrivateRoute element={<CoursesPage />} allowedRoles={['student']} />} />
+      <Route path="/assignments" element={<PrivateRoute element={<AssignmentsPage />} allowedRoles={['student']} />} />
+      <Route path="/grades" element={<PrivateRoute element={<GradesPage />} allowedRoles={['student']} />} />
 
       <Route path="*" element={<Navigate to="/auth" />} />
     </Routes>

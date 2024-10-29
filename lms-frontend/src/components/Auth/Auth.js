@@ -12,23 +12,27 @@ const Auth = () => {
 
   const handleSubmit = async (values) => {
     const { username, password, role } = values;
-    if (isRegistering) {
-      try {
+    
+    try {
+      if (isRegistering) {
+        // Registration flow
         await registerUser({ username, password, role });
         message.success('Registration successful! You can now log in.');
         setIsRegistering(false);
-      } catch (error) {
-        message.error('Registration failed. Try again!');
-      }
-    } else {
-      try {
+      } else {
+        // Login flow
         const response = await loginUser({ username, password });
         message.success('Login successful!');
         localStorage.setItem('loggedInUser', username);
-        navigate(response.data === "Teacher login successful" ? '/teacher-dashboard' : '/student-dashboard');
-      } catch (error) {
-        message.error('Invalid username or password!');
+        
+        // Redirect based on user role from the response (make sure your backend sends the role)
+        const userRole = response.data.role; // Assuming the backend sends the user role in the response
+        navigate(userRole === "teacher" ? '/teacher-dashboard' : '/student-dashboard');
       }
+    } catch (error) {
+      // Improve error handling by checking the error response
+      const errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
+      message.error(errorMessage);
     }
   };
 
