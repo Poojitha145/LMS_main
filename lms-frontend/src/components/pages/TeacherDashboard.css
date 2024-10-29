@@ -1,0 +1,120 @@
+/* General Page Layout */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f9fc;
+}
+
+/* Header and Navigation */
+.logo {
+  height: 32px;
+  margin: 16px;
+}
+
+.header {
+  background-color: #bad2f1; /* Header background color */
+  color: white;
+  padding: 0 16px;
+}
+
+.menu {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+.menu-item {
+  margin-right: 20px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.menu-item:hover {
+  color: #ffc107; /* Change color on hover */
+}
+
+/* Main Content */
+.content {
+  margin: 24px 16px;
+  padding: 24px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 280px;
+}
+
+/* Section Titles */
+h1 {
+  color: #333;
+}
+
+h2 {
+  color: #000000;
+  padding-left: 45%; /* Center the heading */
+}
+
+/* Course and Assignment Card Containers */
+.course-cards,
+.assignment-cards {
+  display: flex;
+  gap: 16px; /* Space between cards */
+  margin-top: 24px;
+  justify-content: center;
+  flex-wrap: wrap; /* Wrap cards to the next line */
+}
+
+/* Card Styling */
+.card {
+  flex: 1 1 20%;
+  max-width: 300px; /* Maximum width for cards */
+  height: 200px; /* Fixed height for cards */
+  background-color: #ecdebfaf; /* Background color for courses */
+  border-radius: 12px; /* Rounded corners */
+  padding: 16px;
+  text-align: center; /* Center align text */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow */
+  border: 1px solid #e0e0e0; /* Light border */
+  transition: transform 0.3s ease; /* Animation effect on hover */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+.card-title {
+  font-weight: bold; /* Bold title */
+  font-size: 1.3em; /* Larger title font size */
+  margin-bottom: 8px; /* Space below title */
+  color: #333; /* Title color */
+}
+
+.card-desc {
+  font-weight: bold; /* Bold description */
+  font-size: 0.9em; /* Description font size */
+  color: #333; /* Description color */
+}
+
+/* Date and Description Row */
+.date-desc-row {
+  display: flex; /* Flexbox for date and description alignment */
+  justify-content: space-between; /* Space between items */
+  font-size: 0.9em; /* Font size for date and description */
+  color: #222020; /* Color for date and description */
+  margin-top: 8px; /* Space above row */
+}
+
+.card p {
+  color: #222020; /* Text color for card paragraphs */
+  padding: 2%; /* Padding around paragraphs */
+  font-size: 1em; /* Font size for paragraphs */
+}
+
+.card desc {
+  color: #2e2c2c; /* Color for description element */
+  font-size: 0.9em; /* Font size for description */
+}
+
+/* Specific Styles for Assignment Cards */
+.assignment-cards .card {
+  background-color: #d8e3f2; /* Different background color for assignments */
+}

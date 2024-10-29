@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #9c9eb4;
+  }
+  
+  /* Header and Navigation */
+  .header {
+    background-color: #a5c994;
+    color: white;
+    padding: 0 16px;
+  }
+  
+  .menu {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+  }
+  
+  .menu-item {
+    margin-right: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .menu-item:hover {
+    color: #ffc107;
+  }
+  
+  /* Main Content */
+  .content {
+    margin: 24px 16px;
+    padding: 24px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 280px;
+  }
+  
+  /* Section Titles */
+  h1 {
+    color: #333;
+  }
+  
+  h2 {
+    color: #000000;
+    padding-left: 45%;
+  }
+  
+  /* Course and Assignment Card Containers */
+  .course-cards, .assignment-cards {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  /* Card Styling */
+  .card {
+    flex: 1 1 20%;
+    max-width: 300px;
+    height: 200px;
+    background-color: #ecdebfaf;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-title {
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .card-desc {
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #333;
+  }
+  
+  /* Date and Description Row */
+  .date-desc-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: #222020;
+    margin-top: 8px;
+  }
+  
+  .card p {
+    color: #222020;
+    padding: 2%;
+    font-size: 1em;
+  }
+  
+  .card desc {
+    color: #2e2c2c;
+    font-size: 0.9em;
+  }
+  
+  /* Specific Styles for Assignment Cards */
+  .assignment-cards .card {
+    background-color: #d8e3f2;
+  }
+  

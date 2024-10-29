@@ -1,0 +1,62 @@
+/* ManageCourses.css */
+
+.manage-courses-page {
+    padding: 20px;
+}
+
+.course-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; 
+}
+
+.course-card {
+    border: 1px solid #c7c7c7; 
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Space inside the card */
+    width: calc(25% - 20px); /* Adjust width for multiple cards */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+.course-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+  }
+  
+
+.edit-link {
+    display: inline-block; /* Make it behave like a block */
+    margin-top: 10px; 
+    color: #007BFF; /* Blue link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.edit-link:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.back-link {
+    display: block; /* Block display for the back link */
+    margin-top: 20px; /* Space above the link */
+    color: #007BFF; /* Blue link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.back-link:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+.add-link {
+    float: right;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #79a6e9; /* Green background */
+    color: white; /* White text color */
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.add-link:hover {
+    background-color: #5e83c7; /* Darker green on hover */
+}

@@ -1,0 +1,162 @@
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+}
+.auth-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.auth-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 24px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h2 {
+  /* text-align: center; */
+  padding-right: 45%;
+  margin-bottom: 24px;
+}
+.auth-container h1 {
+  text-align: center;
+  /* padding-right: 15%; */
+  color: #333;
+  text-shadow: #222020;
+  margin-bottom: 20px;
+}
+
+.auth-container a {
+  display: block;
+  margin-top: 16px;
+  text-align: center;
+  cursor: pointer;
+  
+  color: #007bff;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}
+
+
+.toggle-button {
+  margin: 0 5px;
+  padding: 10px 20px;
+  background-color: transparent;
+  border: 2px solid #007bff;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.toggle-button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.auth-form {
+  text-align: center;
+  width: 300px;
+}
+
+.auth-form h2 {
+  margin-bottom: 20px;
+}
+
+
+
+.auth-form input,
+.auth-form select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+
+
+.role-dropdown {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.auth-form button {
+  width: 100%;
+  margin-left: 4%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+
+/* General Card Styling */
+.card {
+  flex: 1 1 20%;
+  max-width: 300px;
+  height: 200px;
+  background-color: #ecdebfaf; /* Base background color for courses */
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.3em;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.card-desc {
+  font-weight: bold;
+  font-size: 0.9em;
+  color: #333;
+}
+
+/* Specific Styles for Assignment Cards */
+.assignment-cards .card {
+  background-color: #ecdebfaf; /* Change to match course card style */
+}
+
+/* Styles for the assignment card if you want a different color, keep the above line */
+.assignment-cards .card {
+  background-color: #d8e3f2; /* Or use this line if you want a different style */
+}
+
+/* General styles for descriptions and other texts */
+.card p {
+  color: #222020;
+  padding: 2%;
+  font-size: 1em;
+}
+
+.card desc {
+  color: #2e2c2c;
+  font-size: 0.9em;
+}

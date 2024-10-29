@@ -1,0 +1,77 @@
+/* CoursesPage.css */
+
+.courses-page {
+  padding: 20px;
+  /* font-family: Arial, sans-serif; */
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  color: #1890ff;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.back-link:hover {
+  color: #40a9ff;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.course-list {
+  /* display: grid; */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.course-card {
+  flex: 1 1 20%;
+  max-width: 300px;
+  height: 200px;
+  background-color: #f1dfd2; /* Base background color for courses */
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+  font-size: 18px;
+  color: #141313;
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #555;
+  margin: 4px 0;
+}
+
+.card p:first-of-type {
+  /* font-weight: bold; */
+  font-size: 16px;
+}
+
+.view-all-link {
+  display: inline-flex;
+  align-items: center;
+  color: #1890ff;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.view-all-link:hover {
+  color: #40a9ff;
+}

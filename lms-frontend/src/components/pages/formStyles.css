@@ -1,0 +1,193 @@
+
+/* Add Grade Styles */
+.add-grade-container {
+    max-width: 600px;
+    margin: 24px auto;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+  }
+  
+  .add-grade-heading {
+    color: #161515;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.8em;
+  }
+  
+  .add-grade-success-message {
+    color: green;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  
+  .add-grade-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-grade-input {
+    margin-bottom: 16px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  
+  .add-grade-button {
+    padding: 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-grade-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .add-grade-back-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .add-grade-back-link:hover {
+    color: #0056b3;
+  }
+  
+  /* Add Course Styles */
+  .add-course-container {
+    max-width: 600px;
+    margin: 24px auto;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+  }
+  
+  .add-course-heading {
+    color: #161515;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.8em;
+  }
+  
+  .add-course-success-message {
+    color: green;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  
+  .add-course-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-course-input {
+    margin-bottom: 16px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  
+  .add-course-button {
+    padding: 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-course-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .add-course-back-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .add-course-back-link:hover {
+    color: #0056b3;
+  }
+  
+  /* Add Assignment Styles */
+  .add-assignment-container {
+    max-width: 600px;
+    margin: 24px auto;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+  }
+  
+  .add-assignment-heading {
+    color: #161515;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 1.8em;
+  }
+  
+  .add-assignment-success-message {
+    color: green;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  
+  .add-assignment-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-assignment-input {
+    margin-bottom: 16px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  
+  .add-assignment-button {
+    padding: 12px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-assignment-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .add-assignment-back-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .add-assignment-back-link:hover {
+    color: #0056b3;
+  }
+  

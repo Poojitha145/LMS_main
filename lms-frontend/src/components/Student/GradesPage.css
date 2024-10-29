@@ -1,0 +1,94 @@
+.grades-page {
+    padding: 20px;
+    background-color: #fcfffe;
+    font-family: Arial, sans-serif;
+  }
+  
+  
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: 16px;
+    color: #487fd3;
+    text-decoration: none;
+    margin-bottom: 20px;
+  }
+  
+  
+  .back-link:hover {
+    color: #236cbe;
+  }
+  
+  
+  h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  
+  .grades-table {
+    display: grid;
+    gap: 10px;
+  }
+  
+  
+  .table-header, .table-row {
+    display: flex;
+    padding: 15px;
+    border-radius: 8px;
+    justify-content: space-between;
+  }
+  
+  
+  .table-header {
+    background-color: #accdee;
+    font-weight: bold;
+    flex-direction: row;
+  }
+  
+  
+  .table-row {
+    background-color: #e2ebf5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  
+  .table-row:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  
+  .header-title, .header-grade, .row-title, .row-grade {
+    flex: 1;
+    font-size: 16px;
+  }
+  
+  
+  .row-grade {
+    font-weight: bold;
+    text-align: right;
+  }
+  
+  
+  /* Grade color codes */
+  .green {
+    color: #28a745;
+  }
+  
+  
+  .blue {
+    color: #007bff;
+  }
+  
+  
+  .orange {
+    color: #fd7e14;
+  }
+  
+  
+  .red {
+    color: #dc3545;
+  }
+  
