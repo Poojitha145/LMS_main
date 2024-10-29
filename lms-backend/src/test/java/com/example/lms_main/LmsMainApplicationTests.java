@@ -1,17 +1,16 @@
 package com.example.lms_main;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import com.example.lms_main.service.CourseService; // Assuming you have a CourseService
-import com.example.lms_main.repository.CourseRepository; // Assuming you have a CourseRepository
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.Test; // Assuming you have a CourseService
+import org.springframework.beans.factory.annotation.Autowired; // Assuming you have a CourseRepository
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
+
+import com.example.lms_main.repository.CourseRepository;
+import com.example.lms_main.service.CourseService;
 
 @SpringBootTest(classes = {CourseService.class, CourseRepository.class})
 @EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class })
